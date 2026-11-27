@@ -10,17 +10,17 @@ targets:
     resources:
       catalogs:
         fred:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}fred/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}fred/
   staging:
     resources:
       catalogs:
         fred:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}fred/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}fred/
   prod:
     resources:
       catalogs:
         fred:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}fred/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}fred/
 
 resources:
   catalogs:

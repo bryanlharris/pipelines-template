@@ -10,17 +10,17 @@ targets:
     resources:
       catalogs:
         documents:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}documents/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}documents/
   staging:
     resources:
       catalogs:
         documents:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}documents/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}documents/
   prod:
     resources:
       catalogs:
         documents:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}documents/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}documents/
 
 resources:
   catalogs:

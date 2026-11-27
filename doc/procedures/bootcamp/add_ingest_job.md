@@ -18,7 +18,7 @@ edit datasets/YOUR_DATASET/resources.yml
 py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
 py tools/bundle_plan.py -t YOUR_TARGET
-./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1
+./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1 -t YOUR_TARGET
 databricks fs ls dbfs:/Volumes/YOUR_CATALOG/raw/files/YOUR_TABLE
 ```
 

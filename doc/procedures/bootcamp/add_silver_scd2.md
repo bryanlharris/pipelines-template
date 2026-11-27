@@ -25,7 +25,7 @@ edit datasets/YOUR_DATASET/conf/silver_transformations.yml
 databricks bundle deploy -t YOUR_TARGET
 databricks bundle run YOUR_DATASET_apply_settings -t YOUR_TARGET
 Genie → Show the records in YOUR_DATASET.sdp_meta.silver_dataflowspec.
-./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1
+./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1 -t YOUR_TARGET
 Genie → How many records in YOUR_DATASET.silver.YOUR_TABLE_history?
 ```
 

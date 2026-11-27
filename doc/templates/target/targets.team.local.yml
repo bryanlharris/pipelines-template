@@ -9,6 +9,7 @@
 # - prod      treasury                one copy, from a tag, by the lead
 #
 # Each catalog keeps its data in s3://<bucket>/catalogs/<catalog>/.
+# For another folder, set bucket_folder in a target's variables, e.g. team_a/catalogs.
 targets:
 #   dev:
 #     # A failed pipeline update stops, no retries.

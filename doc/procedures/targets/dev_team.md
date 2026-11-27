@@ -28,10 +28,10 @@ and make personal branches.
 7. Deploy. New catalogs take about a minute to show in Catalog Explorer.
 8. Check the plan again. All show unchanged.
 9. Bind your catalogs, and turn on classification and monitoring.
-10. For each dataset, run apply settings, then send its fake files:
-    [fake_data/upload_fake.md](../fake_data/upload_fake.md). Dev never
-    gets real data, so never run the fetch job. documents makes fake PDFs:
-    run its upload script without **-Fake**.
+10. For each dataset, run apply settings, then send its downgraded files
+    ([downgrade.md](../downgrade.md)) with the upload script's **-Downgraded**.
+    Dev never gets real data, so never run the fetch job. documents makes fake PDFs:
+    run its upload script without **-Downgraded**.
 11. When it works, merge your branch into master and push. If the team
     uses pull requests, push the branch and open one instead.
 12. End.
@@ -46,8 +46,8 @@ databricks bundle deploy -t dev
 py tools/bundle_plan.py -t dev
 ./tools/govern_catalogs.ps1 -t dev
 databricks bundle run YOUR_DATASET_apply_settings -t dev
-./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1 -Fake -Catalog YOUR_CATALOG -DatabricksProfile dev
-./datasets/documents/upload_documents.ps1 -Catalog YOUR_CATALOG -DatabricksProfile dev
+./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1 -t dev -Downgraded
+./datasets/documents/upload_documents.ps1 -t dev
 databricks bundle run YOUR_DATASET_ingest -t dev
 git switch master
 git merge YOUR_BRANCH

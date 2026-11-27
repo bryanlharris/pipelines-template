@@ -38,8 +38,11 @@ variables:
     description: The team's group. Reads every table. Set by dev, staging and prod; free uses account users.
     default: account users
   catalog_bucket:
-    description: The S3 bucket that holds this target's catalogs, under catalogs/. Set by dev, staging and prod; free has none.
+    description: The S3 bucket that holds this target's catalogs, in bucket_folder. Set by dev, staging and prod; free has none.
     default: ""
+  bucket_folder:
+    description: The folder in catalog_bucket that holds each catalog's own folder. Slashes are fine, e.g. team_a/catalogs. Never empty.
+    default: catalogs
   warehouse_id:
     description: The SQL warehouse that runs each Genie agent's queries. Set by each target that has a datasets/*/genie.yml.
     default: ""

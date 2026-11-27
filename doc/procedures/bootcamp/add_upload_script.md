@@ -14,7 +14,7 @@ The upload script sends a file from your computer to **/Volumes/YOUR_CATALOG/raw
 ```
 cp doc/templates/bootcamp/upload/upload.ps1 datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1
 edit datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1
-./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1
+./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1 -t YOUR_TARGET
 databricks fs ls dbfs:/Volumes/YOUR_CATALOG/raw/inbox
 databricks fs rm dbfs:/Volumes/YOUR_CATALOG/raw/inbox/YOUR_FILE
 ```

@@ -2,12 +2,16 @@
 # Downloads YOUR_TABLE and uploads it to the YOUR_DATASET inbox. Runs on your computer.
 # The ingest job moves it to raw files.
 #
-#   ./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1
+#   ./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1 -t free
 
-param(
-    [string]$Catalog = "YOUR_DATASET",
-    [string]$DatabricksProfile = "free"
-)
+param([Parameter(Mandatory)][string]$Target)
+
+# The bundle names the profile and catalog. Run this from the repo's root folder.
+$dataset = Split-Path $PSScriptRoot -Leaf
+$config = databricks bundle validate -t $Target -o json | ConvertFrom-Json
+$DatabricksProfile = $config.workspace.profile
+$Catalog = $config.resources.catalogs.$dataset.name
+if (-not $Catalog) { throw "No catalog for $dataset in target $Target" }
 
 $table = "YOUR_TABLE"
 $ext   = "CHANGE_ME → the file's extension, e.g. xml, no dot"

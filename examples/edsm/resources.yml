@@ -10,17 +10,17 @@ targets:
     resources:
       catalogs:
         edsm:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}edsm/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}edsm/
   staging:
     resources:
       catalogs:
         edsm:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}edsm/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}edsm/
   prod:
     resources:
       catalogs:
         edsm:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}edsm/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}edsm/
 
 resources:
   catalogs:

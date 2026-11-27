@@ -11,7 +11,7 @@
 - [admin.md](admin.md): small tasks, e.g. apply settings, refresh, full refresh
 - [add_custom_code.md](add_custom_code.md): give one dataset its own Python, beyond what the YAML can do
 - [add_genie.md](add_genie.md): give a dataset a Genie agent, after its first load
-- [fake_data.md](fake_data.md): dev only: make fake files, send them, and wipe dev to start over
+- [downgrade.md](downgrade.md): strip a prod file to its bare shape, for dev
 
 ## Details
 
@@ -37,4 +37,4 @@
 
 [add_genie.md](add_genie.md): A Genie agent answers questions about one dataset in plain English. It goes in after the pipeline's first run, because Genie needs the tables to exist.
 
-[fake_data.md](fake_data.md): Dev never gets real data. Each dataset keeps a few made-up records per table in fake/, shaped like the real files, and its upload script sends them with -Fake.
+[downgrade.md](downgrade.md): Strips the data out of a copy of a prod file and keeps its format, encoding and header. Dev gets the stripped file, never real data.

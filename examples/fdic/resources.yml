@@ -10,17 +10,17 @@ targets:
     resources:
       catalogs:
         fdic:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}fdic/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}fdic/
   staging:
     resources:
       catalogs:
         fdic:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}fdic/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}fdic/
   prod:
     resources:
       catalogs:
         fdic:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}fdic/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}fdic/
 
 resources:
   catalogs:

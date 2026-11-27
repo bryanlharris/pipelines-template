@@ -33,12 +33,13 @@ team-pipelines
 ### Target Details
 
 Dev, staging and prod keep each catalog in **s3://some-bucket/catalogs/**.
-Prod gets files from the fetch job. Dev gets fake files. Staging's pipelines
+The folder is the variable **bucket_folder**; set it in a target to use another.
+Prod gets files from the fetch job. Dev gets downgraded files. Staging's pipelines
 read prod's **raw.files** volume, and staging's **raw.files** volume stays
 empty.
 
 | Target  | Prefix            | Who              | Table data     | Procedure                            |
 |---------|-------------------|------------------|----------------|--------------------------------------|
-| dev     | `dev_jim_`        | each person      | Fake           | [dev_team.md](dev_team.md)           |
+| dev     | `dev_jim_`        | each person      | Downgraded     | [dev_team.md](dev_team.md)           |
 | staging | `staging_`        | the team lead    | Private/Public | [staging_team.md](staging_team.md)   |
 | prod    | none              | the lead, as sp  | Private/Public | [prod_team.md](prod_team.md)         |

@@ -5,15 +5,15 @@ targets:
     resources:
       catalogs:
         YOUR_DATASET:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}YOUR_DATASET/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}YOUR_DATASET/
   staging:
     resources:
       catalogs:
         YOUR_DATASET:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}YOUR_DATASET/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}YOUR_DATASET/
   prod:
     resources:
       catalogs:
         YOUR_DATASET:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}YOUR_DATASET/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}YOUR_DATASET/
 

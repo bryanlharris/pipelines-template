@@ -2,13 +2,20 @@
 # Makes fake PDFs, uploads them to the documents inbox, then deletes them.
 # The ingest job moves each PDF to raw files.
 #
-#   ./datasets/documents/upload_documents.ps1 -Count 9
+#   ./datasets/documents/upload_documents.ps1 -t free -Count 9
 
 param(
     [int]$Count = 9,
-    [string]$Catalog = "documents",
-    [string]$DatabricksProfile = "free"
+    [Parameter(Mandatory)][string]$Target
 )
+
+# The bundle names the profile and catalog, as it does for the tools. Run this
+# from the repo's root folder.
+$dataset = Split-Path $PSScriptRoot -Leaf
+$config = databricks bundle validate -t $Target -o json | ConvertFrom-Json
+$DatabricksProfile = $config.workspace.profile
+$Catalog = $config.resources.catalogs.$dataset.name
+if (-not $Catalog) { throw "No catalog for $dataset in target $Target" }
 
 $inbox = "dbfs:/Volumes/$Catalog/raw/inbox"
 

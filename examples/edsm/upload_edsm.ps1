@@ -3,14 +3,21 @@
 # which can't fetch; enterprise targets use the fetch job.
 # The ingest job moves each file to raw files.
 #
-#   ./datasets/edsm/upload_edsm.ps1
-#   ./datasets/edsm/upload_edsm.ps1 -Fake    # dev: the made-up files in fake/
+#   ./datasets/edsm/upload_edsm.ps1 -t free
+#   ./datasets/edsm/upload_edsm.ps1 -t dev -Downgraded    # dev: the downgraded files in downgraded/
 
 param(
-    [string]$Catalog = "edsm",
-    [string]$DatabricksProfile = "free",
-    [switch]$Fake
+    [Parameter(Mandatory)][string]$Target,
+    [switch]$Downgraded
 )
+
+# The bundle names the profile and catalog, as it does for the tools. Run this
+# from the repo's root folder.
+$dataset = Split-Path $PSScriptRoot -Leaf
+$config = databricks bundle validate -t $Target -o json | ConvertFrom-Json
+$DatabricksProfile = $config.workspace.profile
+$Catalog = $config.resources.catalogs.$dataset.name
+if (-not $Catalog) { throw "No catalog for $dataset in target $Target" }
 
 # One line per file, like fetch.yml. Name each file after its table.
 # Put ${year} where the url has a year. Add gunzip = $true to unzip a .gz;
@@ -30,12 +37,12 @@ $inbox = "dbfs:/Volumes/$Catalog/raw/inbox"
 $check = databricks fs ls $inbox --profile $DatabricksProfile 2>&1
 if ($LASTEXITCODE -ne 0) { throw "Cannot reach $inbox (profile $DatabricksProfile): $check" }
 
-# -Fake sends the made-up files in fake/ instead, for dev. Each run gets a
+# -Downgraded sends the downgraded files in downgraded/ instead, for dev. Each run gets a
 # new inbox name, so the ingest job's file trigger sees a new file.
-if ($Fake) {
+if ($Downgraded) {
     $run = Get-Date -Format HHmmss
-    foreach ($f in Get-ChildItem "$PSScriptRoot/fake") {
-        $name = "$($f.BaseName)_fake_$run$($f.Extension)"
+    foreach ($f in Get-ChildItem "$PSScriptRoot/downgraded") {
+        $name = "$($f.BaseName)_downgraded_$run$($f.Extension)"
         Write-Host "Uploading to $inbox/$name"
         databricks fs cp $f.FullName "$inbox/$name" --overwrite --profile $DatabricksProfile
         if ($LASTEXITCODE -ne 0) { throw "Upload failed: $name" }

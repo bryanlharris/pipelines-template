@@ -52,7 +52,7 @@ grep -rnE "YOUR_|CHANGE_ME" datasets/$d | grep -vE ":[0-9]+:\s*(#|--)"
 py tools/bundle_plan.py -t free
 databricks bundle deploy -t free
 py tools/bundle_plan.py -t free
-& ./datasets/$d/upload_$d.ps1
+& ./datasets/$d/upload_$d.ps1 -t free
 databricks bundle run ${d}_apply_settings -t free
 databricks bundle run ${d}_ingest -t free
 ```

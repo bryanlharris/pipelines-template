@@ -43,8 +43,8 @@ datasets/YOUR_DATASET/conf/                    onboarding.yml, silver_transforma
 datasets/YOUR_DATASET/fetch.yml                what the fetch job downloads
 datasets/YOUR_DATASET/tables/                  SQL the pipeline runs: one silver.YOUR_TABLE.sql view per table,
                                                plus extra tables, e.g. edsm's gold layer
-datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1  dev: -Fake sends fake/ to the inbox
-datasets/YOUR_DATASET/fake/                    dev only: about 10 made-up records per table, shaped like the real files
+datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1  dev: -Downgraded sends downgraded/ to the inbox
+datasets/YOUR_DATASET/downgraded/              dev only: one stripped file per table, the real files with the data removed
 datasets/YOUR_DATASET/genie.yml                optional Genie agent over silver and gold; added after the first load
 examples/                                      finished datasets to copy into datasets/; never deployed
 shared/                                        python the jobs run: router, fetch, the pipeline runner
@@ -65,7 +65,7 @@ tools/                                         bundle_plan.py, govern_catalogs.p
 | Add a data quality rule                 | doc/procedures/add_rules.md                            |
 | Skip a bad file                         | doc/procedures/remove_bad_file.md                      |
 | Add a Genie agent to a dataset          | doc/procedures/add_genie.md                            |
-| Fake data for dev                       | doc/procedures/fake_data.md                            |
+| Downgrade a prod file for dev           | doc/procedures/downgrade.md                            |
 | Custom Python for one dataset           | doc/procedures/add_custom_code.md                      |
 | Set up a target: dev, staging, prod     | doc/procedures/targets/README.md                       |
 | Practice at home on Free Edition        | doc/free/README.md                                       |
@@ -155,8 +155,8 @@ Data quality rules:
 Targets:
 
 - Enterprise: the bundle makes the catalog in the target's bucket. Prod's
-  files come from the fetch job. Dev gets only fake files, from the upload
-  script with -Fake; never run fetch on dev.
+  files come from the fetch job. Dev gets only downgraded files, from the upload
+  script with -Downgraded; never run fetch on dev.
 - Staging: its pipelines read prod's raw.files, e.g. treasury.raw.files.
   Staging sets **files_prefix** to "", and the apply settings job's
   point_files task writes prod's path into the settings. Staging's own

@@ -9,17 +9,17 @@ targets:
     resources:
       catalogs:
         treasury:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}treasury/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}treasury/
   staging:
     resources:
       catalogs:
         treasury:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}treasury/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}treasury/
   prod:
     resources:
       catalogs:
         treasury:
-          storage_root: s3://${var.catalog_bucket}/catalogs/${var.catalog_prefix}treasury/
+          storage_root: s3://${var.catalog_bucket}/${var.bucket_folder}/${var.catalog_prefix}treasury/
 
 resources:
   catalogs:

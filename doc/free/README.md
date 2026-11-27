@@ -54,7 +54,7 @@ databricks bundle deploy -t free
 py tools/bundle_plan.py -t free
 ./tools/govern_catalogs.ps1 -t free
 databricks bundle run YOUR_DATASET_apply_settings -t free
-& ./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1
+& ./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1 -t free
 databricks bundle run YOUR_DATASET_ingest -t free
 ```
 
