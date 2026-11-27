@@ -30,7 +30,7 @@ with RESOURCE_EXHAUSTED, wait.
     minutes, and deploy again.
 11. Check the plan again. All show unchanged.
 12. Run govern_catalogs. It limits each catalog to this workspace, and turns
-    on data quality monitoring. Classification shows failed: free doesn't
+    on data quality monitoring. Classification shows ❌: free doesn't
     support it.
 13. For each dataset, run the apply settings job. Do this before the files
     land, so each ingest run has its settings. Free runs one or two jobs at

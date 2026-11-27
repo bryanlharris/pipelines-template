@@ -3,7 +3,7 @@
 Scripts you run from the repo's root folder.
 
 - [bundle_plan.py](bundle_plan.py) and [bundle_plan.ps1](bundle_plan.ps1): show what a deploy would do. The same output, in Python or PowerShell.
-- [govern_catalogs.ps1](govern_catalogs.ps1): binds each catalog to the workspace, isolates it, turns on data classification, and turns on data quality monitoring for silver and gold. Skips what's already done. Prints one line per catalog: what changed or failed, or "ok".
+- [govern_catalogs.ps1](govern_catalogs.ps1): binds each catalog to the workspace, isolates it, turns on data classification, and turns on data quality monitoring for silver and gold. Skips what's already done. Prints one row per catalog, with a column for each step: a check if it is on, a cross if it failed, a minus if there is no schema to watch.
 
 ## Usage
 
