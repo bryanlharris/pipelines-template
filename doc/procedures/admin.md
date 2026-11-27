@@ -14,7 +14,7 @@ shows.
 ```
 
 The GUI name starts with the target's prefix, e.g. **edsm - pipeline** on
-free, **dev_jim_edsm - pipeline** on dev. The key never changes.
+prod, **dev_jim_edsm - pipeline** on dev. The key never changes.
 Jobs work the same way, e.g. **edsm_apply_settings** and **edsm_ingest**.
 
 ## Apply Settings
@@ -137,7 +137,7 @@ databricks pipelines get YOUR_PIPELINE_ID -p YOUR_TARGET
 databricks bundle deployment bind YOUR_DATASET_pipeline YOUR_PIPELINE_ID -t YOUR_TARGET --auto-approve
 DROP TABLE YOUR_CATALOG.YOUR_SCHEMA.YOUR_TABLE;
 databricks bundle run YOUR_DATASET_pipeline -t YOUR_TARGET
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 ```
 
 ## Pause or Start the Fetch Schedule
@@ -177,7 +177,7 @@ hands it over. The user's bundle then takes it over with a bind.
 ```
 CREATE CATALOG YOUR_CATALOG
 databricks bundle deployment bind YOUR_DATASET YOUR_CATALOG -t YOUR_TARGET --auto-approve
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
 ```
 
@@ -194,7 +194,7 @@ just run the deploy again after a minute or two.
 databricks bundle deploy -t YOUR_TARGET
 ```
 
-When I deployed new datasets on free,
+When I deployed new datasets,
   the ingest job failed with "No volume is defined at /Volumes/edsm/raw/inbox/". The inbox volume had
   just been made and wasn't visible yet. A few minutes later, deploying again worked. It happened for
   edsm, fred and documents

@@ -1,5 +1,6 @@
 # The free target: Free Edition, at home. Copy to targets/; git ignores it,
 # so it stays on this computer. Uncomment free.
+# See doc/free/README.md.
 #
 # Free has no bucket and no prefix: the treasury dataset deploys as the
 # catalog treasury.

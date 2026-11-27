@@ -33,13 +33,13 @@ This procedure teaches how to build a one-table pipeline. You'll learn about eac
 
 US Treasury publishes daily interest rates as an XML file. Use these values for the blanks.
 
-| Blank        | Free           | Dev                   |
-|--------------|----------------|-----------------------|
-| YOUR_DATASET | treasury       | treasury              |
-| YOUR_CATALOG | treasury       | dev_jim_treasury      |
-| YOUR_TABLE   | yieldCurve     | yieldCurve            |
-| YOUR_FILE    | yieldCurve.xml | yieldCurve.xml        |
-| YOUR_TARGET  | free           | dev                   |
+| Blank        | Dev              |
+|--------------|------------------|
+| YOUR_DATASET | treasury         |
+| YOUR_CATALOG | dev_jim_treasury |
+| YOUR_TABLE   | yieldCurve       |
+| YOUR_FILE    | yieldCurve.xml   |
+| YOUR_TARGET  | dev              |
 
 On dev, the catalog starts with dev_ and your first name. See
 [dev_team.md](targets/dev_team.md).

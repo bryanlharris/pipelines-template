@@ -1,5 +1,5 @@
 ---
-name: pipelines-framework
+name: pipelines-template
 description: Build, change and deploy the team's pipelines repo. Use when asked to set up a target (free, dev, staging, prod), add a dataset or a table, add rules, skip a bad file, check the plan, or deploy.
 ---
 
@@ -39,7 +39,7 @@ While you work:
 Before you finish:
 
 - Search for YOUR_ and CHANGE_ME outside comments. Nothing should show.
-- Show the plan, `py tools/bundle_plan.py <target>`. Ask before any deploy
+- Show the plan, `py tools/bundle_plan.py -t <target>`. Ask before any deploy
   or full refresh.
 - Commit on the branch, and say what's left: deploy, apply settings, files,
   ingest, checks.

@@ -1,4 +1,4 @@
-# pipelines-framework: one bundle for your datasets. Each dataset is built with
+# pipelines-template: one bundle for your datasets. Each dataset is built with
 # sdp-meta (Databricks Labs) and has its own folder: datasets/<dataset>/resources.yml,
 # conf/, tables/, upload script. Shared code is in shared/. Each target has
 # its own file in targets/.
@@ -10,7 +10,8 @@
 # doc/templates/target/: targets.free.local.yml or targets.team.local.yml.
 
 bundle:
-  # Change to your team, e.g. sdp_edsm. The name sets where the bundle keeps its state.
+  # Change to your team, e.g. sdp_edsm. In a dataset repo, use the dataset's name.
+  # The name sets where the bundle keeps its state.
   name: YOUR_TEAM
 
 include:

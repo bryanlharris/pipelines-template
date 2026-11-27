@@ -4,8 +4,8 @@
 
 This job turns **datasets/YOUR_DATASET/conf/*.yml** into tables. The
 pipeline reads its settings from those tables. Run the job after each
-change to **conf/*.yml**. Databricks calls this step onboarding. We call it
-apply settings.
+change to **conf/*.yml**. Databricks labs sdp-meta folks call this step onboarding.
+We call it apply settings.
 
 The template adds a second job under the **jobs:** section, so the
 ingest job must be last in **resources.yml**.
@@ -21,9 +21,9 @@ Don't run it yet. **conf/** doesn't exist until the bronze part.
 ```
 cat doc/templates/bootcamp/settings/resources.yml >> datasets/YOUR_DATASET/resources.yml
 edit datasets/YOUR_DATASET/resources.yml
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 ```
 
 ---

@@ -10,7 +10,7 @@ doc/procedures/setup/setup_genie.md.
 
 One Databricks Asset Bundle that loads files into Delta tables with
 sdp-meta (Databricks Labs). Each dataset is a folder under **datasets/**,
-with its own catalog, jobs and pipeline. The same code deploys to free, dev,
+with its own catalog, jobs and pipeline. The same code deploys to dev,
 staging and prod; the target sets the catalog prefix and the bucket.
 
 This repo is upstream: it ships no datasets and deploys nothing. Each team
@@ -20,7 +20,7 @@ clones it, see doc/procedures/start_repo.md, and copies datasets from
 How data flows, in each dataset:
 
 1. A file lands in the inbox volume, **raw.inbox**. The fetch job downloads
-   it from a URL in **fetch.yml**; on free, the upload script sends it; a
+   it from a URL in **fetch.yml**; an upload script can send it; a
    file can also be copied in.
 2. The ingest job's router moves it to **raw.files/YOUR_TABLE/**, adding a time
    stamp to its name. A file is named after its table. Files the router
@@ -43,7 +43,7 @@ datasets/YOUR_DATASET/conf/                    onboarding.yml, silver_transforma
 datasets/YOUR_DATASET/fetch.yml                what the fetch job downloads
 datasets/YOUR_DATASET/tables/                  SQL the pipeline runs: one silver.YOUR_TABLE.sql view per table,
                                                plus extra tables, e.g. edsm's gold layer
-datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1  free: downloads the files to the inbox; dev: -Fake sends fake/
+datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1  dev: -Fake sends fake/ to the inbox
 datasets/YOUR_DATASET/fake/                    dev only: about 10 made-up records per table, shaped like the real files
 datasets/YOUR_DATASET/genie.yml                optional Genie agent over silver and gold; added after the first load
 examples/                                      finished datasets to copy into datasets/; never deployed
@@ -67,7 +67,8 @@ tools/                                         bundle_plan.py, govern_catalogs.p
 | Add a Genie agent to a dataset          | doc/procedures/add_genie.md                            |
 | Fake data for dev                       | doc/procedures/fake_data.md                            |
 | Custom Python for one dataset           | doc/procedures/add_custom_code.md                      |
-| Set up a target: free, dev, staging, prod | doc/procedures/targets/README.md                     |
+| Set up a target: dev, staging, prod     | doc/procedures/targets/README.md                       |
+| Practice at home on Free Edition        | doc/free/README.md                                       |
 | Apply settings, refresh, errors         | doc/procedures/admin.md                                |
 | Learn how the pieces work; not for real work | doc/procedures/bootcamp.md            |
 | Add a gold SQL table, for SQL people    | doc/procedures/bootcamp_sql.md                         |
@@ -94,13 +95,13 @@ tools/                                         bundle_plan.py, govern_catalogs.p
 
 ## Names
 
-- Catalog: `${var.catalog_prefix}YOUR_DATASET`. On free and prod, no prefix:
+- Catalog: `${var.catalog_prefix}YOUR_DATASET`. On prod, no prefix:
   treasury. Dev adds a first name: dev_jim_treasury.
   Staging: staging_treasury.
 - Schemas: raw, bronze, silver, sdp_meta, and gold when there are SQL tables.
   Volumes: raw.inbox, raw.files, sdp_meta.conf.
 - Jobs: "${var.catalog_prefix}YOUR_DATASET - ingest", "- apply settings", "- fetch".
-  Pipeline: "${var.catalog_prefix}YOUR_DATASET - pipeline". On free and prod the prefix is
+  Pipeline: "${var.catalog_prefix}YOUR_DATASET - pipeline". On prod the prefix is
   empty, e.g. "treasury - ingest"; on dev, "dev_jim_treasury - ingest".
 - Tables: bronze.YOUR_TABLE, silver.YOUR_TABLE_history, view silver.YOUR_TABLE.
 - Blanks in templates: YOUR_TEAM (the bundle name), YOUR_DATASET, YOUR_OWNER, YOUR_CATALOG, YOUR_TABLE,
@@ -114,7 +115,7 @@ tools/                                         bundle_plan.py, govern_catalogs.p
 
 Checking:
 
-- After every change: `py tools/bundle_plan.py <target>`, deploy, plan
+- After every change: `py tools/bundle_plan.py -t <target>`, deploy, plan
   again. The second plan shows all unchanged.
 - A change to **conf/** needs a deploy, then the apply settings job. A change
   to **resources.yml** needs only a deploy.
@@ -125,19 +126,18 @@ Safety:
 
 - Never commit bucket names, hosts or tokens. They live in
   **targets/*.local.yml**, which git ignores. A fresh clone has no targets
-  file: copy **doc/templates/target/targets.free.local.yml** or
-  **targets.team.local.yml**, and fill it in.
-- Deploy to free or your own dev. Staging and prod get releases, by tag, from
+  file: copy **doc/templates/target/targets.team.local.yml**, and fill it
+  in.
+- Deploy to your own dev. Staging and prod get releases, by tag, from
   the team lead; see doc/procedures/targets/.
 - Never delete a file from raw.files. To skip a bad file, list it in the
   dataset's **not_a_bad_file** rule, then full refresh.
-- Free Edition has a daily serverless limit. RESOURCE_EXHAUSTED means wait.
 
 Jobs and pipelines:
 
 - Every compute task sets `disable_auto_optimization: true`, so it fails
   once with no retries. Pipeline tasks ignore it, so they don't set it.
-- Free, dev and staging set `presets: pipelines_development: true`, so a
+- Dev and staging set `presets: pipelines_development: true`, so a
   failed update stops. Never use `mode: development` or
   `presets.name_prefix`: they rename the schemas and break the volume paths.
 - Comment every catalog, schema, volume and table. Catalog comments are
@@ -154,8 +154,6 @@ Data quality rules:
 
 Targets:
 
-- Free: no bucket. The catalog is made with SQL, then bound. Files come from
-  the upload script.
 - Enterprise: the bundle makes the catalog in the target's bucket. Prod's
   files come from the fetch job. Dev gets only fake files, from the upload
   script with -Fake; never run fetch on dev.
@@ -164,9 +162,10 @@ Targets:
   point_files task writes prod's path into the settings. Staging's own
   inbox and raw.files stay empty, so the lead runs its pipelines by hand.
 - Every target: after the first deploy, and after each new dataset, run
-  `./tools/govern_catalogs.ps1 -Target <t>`. It binds each catalog to the
-  workspace, isolates it, turns on data classification (not on free), and
-  turns on data quality monitoring for silver and gold. On prod, add
+  `./tools/govern_catalogs.ps1 -t <t>`. It binds each catalog to the
+  workspace, isolates it, turns on data classification, and
+  turns on data quality monitoring for silver and gold, or the schemas in
+  `-Schemas`. On prod, add
   `-StagingWorkspace`, so staging can read each catalog's raw.files.
 - Grants: each catalog's **grants** in resources.yml give run_as
   ALL_PRIVILEGES, the deployer MANAGE and read, **team_group** read, and

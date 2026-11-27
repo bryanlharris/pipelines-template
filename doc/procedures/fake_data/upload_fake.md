@@ -6,8 +6,8 @@ Sends a dataset's fake files to your dev copy's inbox. The ingest job takes
 them from there, the same as real files.
 
 Each dataset's upload script does this with **-Fake**. Without it, the
-script downloads real files: that's for free only. On dev, never run the
-fetch job: it downloads real data. Its schedule starts paused.
+script downloads real files, so never run it that way on dev. Never run the
+fetch job on dev either: it downloads real data. Its schedule starts paused.
 
 Each run gives the files a new inbox name, e.g.
 **fedfunds_fake_143005.csv**, so the ingest job starts every time.

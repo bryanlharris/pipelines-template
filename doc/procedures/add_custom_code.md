@@ -22,7 +22,7 @@ code for each bronze table; a list at the top says which tables it changes.
 cp doc/templates/custom_runner/init_sdp_meta_pipeline.py datasets/YOUR_DATASET/
 edit datasets/YOUR_DATASET/init_sdp_meta_pipeline.py
 edit datasets/YOUR_DATASET/resources.yml
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
 databricks bundle run YOUR_DATASET_pipeline -t YOUR_TARGET
 ```

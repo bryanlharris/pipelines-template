@@ -1,15 +1,11 @@
 # Procedures
 
-To write a new procedure, copy one like it.
-
-## Procedures
-
 - [setup.md](setup.md): set up the computer and CLI
 - [start_repo.md](start_repo.md): make your team's own repo from this one
 - [bootcamp.md](bootcamp.md): a slow, step-by-step introduction to this project
 - [bootcamp_sql.md](bootcamp_sql.md): for SQL people: add a gold table on top of silver
 - [build_many_table_dataset.md](build_many_table_dataset.md): builds a dataset with any number of tables, from the dataset template
-- [targets/](targets/README.md): set up a target: free, dev, staging or prod
+- [targets/](targets/README.md): set up a target: dev, staging or prod
 - [add_rules.md](add_rules.md): add a data quality rule: warn, drop, or fail
 - [remove_bad_file.md](remove_bad_file.md): skip a bad file, and load a fixed copy
 - [admin.md](admin.md): small tasks, e.g. apply settings, refresh, full refresh
@@ -21,11 +17,17 @@ To write a new procedure, copy one like it.
 
 [setup.md](setup.md): This is a basic setup of your laptop so you can do things like grep and sed even if you're on Windows. It also sets up things like an edit alias so all users edit files with the same command. This way procedures can be more common between Apple and PC.
 
+[start_repo.md](start_repo.md): Make a repo from this one. Create a team repo for >1 datasets, or a dedicated repo for one dataset.
+
 [bootcamp.md](bootcamp.md): This does one tiny step at a time and lets you see the results in Databricks as you go. This is more like a bootcamp for sdp-meta. It's not efficient but if you follow this you should get the idea of how everything works.
+
+[bootcamp_sql.md](bootcamp_sql.md): For SQL people. You write a .sql file that builds a gold table on top of silver. The pipeline runs it in the right order, and refreshes it on every run.
 
 [build_many_table_dataset.md](build_many_table_dataset.md): You copy one folder and fill in the blanks. This procedure is much easier once you do the bootcamp procedure.
 
-[targets/](targets/README.md): One procedure per target. dev.md shows how the dev target works and sets it up. You'll see how each target names its own bucket, so all three targets use the same code. It also shows how to tag a release and deploy it to dev.
+[targets/](targets/README.md): One procedure per target. dev_team.md shows how the dev target works and sets it up. You'll see how each target names its own bucket, so all three targets use the same code. It also shows how to tag a release and deploy it to dev.
+
+[add_rules.md](add_rules.md): Rules check every record. A warn rule counts odd records, a drop rule removes records you can't use, and a fail rule stops the pipeline on a broken file.
 
 [remove_bad_file.md](remove_bad_file.md): This skips a bad file without deleting it, since nothing in raw/files is ever deleted. If the pipeline stopped on the file, you fix a copy and upload it. If its records already landed, a full refresh takes them out.
 
@@ -36,5 +38,3 @@ To write a new procedure, copy one like it.
 [add_genie.md](add_genie.md): A Genie agent answers questions about one dataset in plain English. It goes in after the pipeline's first run, because Genie needs the tables to exist.
 
 [fake_data.md](fake_data.md): Dev never gets real data. Each dataset keeps a few made-up records per table in fake/, shaped like the real files, and its upload script sends them with -Fake.
-
-[add_rules.md](add_rules.md): Rules check every record. A warn rule counts odd records, a drop rule removes records you can't use, and a fail rule stops the pipeline on a broken file.

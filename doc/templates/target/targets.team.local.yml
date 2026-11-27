@@ -16,6 +16,8 @@ targets:
 #       pipelines_development: true
 #     workspace:
 #       profile: dev
+#       # No root_path: it defaults to your home folder, so each developer
+#       # deploys a separate copy. Staging and prod share one.
 #     variables:
 #       # Your first name keeps your copy apart from everyone else's.
 #       catalog_prefix: dev_CHANGE_ME_   # → your first name, e.g. dev_jim_

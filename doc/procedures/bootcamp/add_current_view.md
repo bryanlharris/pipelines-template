@@ -9,9 +9,11 @@ version of each record, not the full history.
 2. Copy the current view template into it, as **silver.YOUR_TABLE**.sql.
 3. Read the library template into the pipeline. Go to the notebook
    library's last line, **path**, and add the template's lines below it.
-   - vim: type **:r doc/templates/bootcamp/view/pipeline_library.yml**
-   - VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Click
-     the very start of the next line, and press **Ctrl+V**.
+   - Template is here: **doc/templates/bootcamp/view/pipeline_library.yml**
+   - In vim: type **:r** then paste the template's path, then **Enter**
+   - In VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Go back
+     to **resources.yml**, click the very start of the next line, and
+     press **Ctrl+V**.
    - Then replace **YOUR_TABLE** in **resources.yml**.
 4. Open the view, **tables/silver.YOUR_TABLE**.sql.
 5. Replace **YOUR_TABLE**.
@@ -30,9 +32,9 @@ mkdir datasets/YOUR_DATASET/tables/
 cp doc/templates/bootcamp/view/current.sql datasets/YOUR_DATASET/tables/silver.YOUR_TABLE.sql
 edit datasets/YOUR_DATASET/resources.yml
 edit datasets/YOUR_DATASET/tables/silver.YOUR_TABLE.sql
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 ./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1
 Genie → How many records in YOUR_DATASET.silver.YOUR_TABLE?
 ```

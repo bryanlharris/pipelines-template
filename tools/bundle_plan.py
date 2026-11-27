@@ -9,7 +9,7 @@ from their catalog and volumes from their schema.
 for each table it names that doesn't exist yet.
 Read only: it runs bundle validate and plan, never deploy.
 
-Usage: py tools/bundle_plan.py <target> [-v]      e.g. py tools/bundle_plan.py free
+Usage: py tools/bundle_plan.py -t <target> [-v]      e.g. py tools/bundle_plan.py -t free
 """
 import argparse
 import json
@@ -171,7 +171,7 @@ def print_tree(groups, width, verbose):
 
 def main():
     parser = argparse.ArgumentParser(description='Show what a bundle deploy would do, by real name.')
-    parser.add_argument('target', help='bundle target, e.g. dev')
+    parser.add_argument('-t', '--target', required=True, help='bundle target, e.g. dev')
     parser.add_argument('-v', '--verbose', '-verbose', action='store_true',
                         help='also show the bundle keys')
     args = parser.parse_args()
@@ -180,6 +180,11 @@ def main():
 
     config = cli('validate', '-t', target)
     entries = cli('plan', '-t', target)['plan']
+
+    # Saved state but nothing in the bundle: the plan would delete it all.
+    if entries and not config.get('resources'):
+        sys.exit(f"No resources in this bundle, but the plan would delete {len(entries)}.\n"
+                 f"Wrong folder? Bundle {config.get('bundle', {}).get('name')}, target {target}.")
 
     # Sort each resource into its section, and count the actions.
     counts = {}
@@ -201,11 +206,11 @@ def main():
         elif kind == 'schemas':
             row = Row(s.get('name') or key, action, protected(config, kind, key), key,
                       changes(entry))
-            catalogs.setdefault(s.get('catalog_name'), []).append(row)
+            catalogs.setdefault(s.get('catalog_name') or '(unknown)', []).append(row)
         else:
             row = Row(s.get('name') or key, action, protected(config, kind, key), key,
                       changes(entry))
-            path = f"/Volumes/{s.get('catalog_name')}/{s.get('schema_name')}"
+            path = f"/Volumes/{s.get('catalog_name') or '(unknown)'}/{s.get('schema_name') or '(unknown)'}"
             volumes.setdefault(path, []).append(row)
 
     # Summary line: "Plan for dev: 2 create, 18 unchanged"

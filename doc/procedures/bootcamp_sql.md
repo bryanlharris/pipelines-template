@@ -9,9 +9,9 @@ right order.
 - Your file makes a materialized view in **gold**: a table the pipeline
   refreshes on every run.
 - Don't put a catalog in your SQL. The pipeline supplies it, so the same
-  file runs on free, dev, staging and prod.
+  file runs on dev, staging and prod.
 - Your file can read other gold tables. The pipeline works out the order.
-- You can build **.sql** tables in silver or gold. This bootcamp uses gold.
+- You can build **.sql** tables in silver or gold. This SQL bootcamp uses gold.
 - Joins, group-bys and windows all work. See **examples/edsm/tables/**.
 - The pipeline sees a new or changed **.sql** file only after a deploy.
   Then run the pipeline to build the table.
@@ -19,8 +19,7 @@ right order.
 ## Prerequisites
 
 1. [setup.md](setup.md): set up the computer and the CLI
-2. Your target, e.g. [dev_team.md](targets/dev_team.md) steps 1–3, or
-   [free.md](targets/free.md) at home
+2. Your target, e.g. [dev_team.md](targets/dev_team.md) steps 1–3
 3. The dataset is loaded into silver
 
 ## Practice on Treasury
@@ -28,14 +27,14 @@ right order.
 Build **gold.yieldCurve_monthly**: the average 2-year and 10-year rates per
 month.
 
-| Blank        | Free                 | Dev                   |
-|--------------|----------------------|-----------------------|
-| YOUR_DATASET | treasury             | treasury              |
-| YOUR_CATALOG | treasury             | dev_jim_treasury      |
-| YOUR_TABLE   | yieldCurve_monthly   | yieldCurve_monthly    |
-| YOUR_VIEW    | yieldCurve           | yieldCurve            |
-| YOUR_TARGET  | free                 | dev                   |
-| YOUR_BRANCH  | add-monthly          | jim/add-monthly       |
+| Blank        | Dev                |
+|--------------|--------------------|
+| YOUR_DATASET | treasury           |
+| YOUR_CATALOG | dev_jim_treasury   |
+| YOUR_TABLE   | yieldCurve_monthly |
+| YOUR_VIEW    | yieldCurve         |
+| YOUR_TARGET  | dev                |
+| YOUR_BRANCH  | jim/add-monthly    |
 
 The query:
 
@@ -61,15 +60,19 @@ GROUP BY 1
    **silver.YOUR_VIEW**, not **YOUR_CATALOG.silver.YOUR_VIEW**.
 6. In **resources.yml**, if the schemas have no **gold**, add the gold
    schema template below the silver schema.
-   - vim: type **:r doc/templates/bootcamp_sql/gold_schema.yml**
-   - VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Click
-     the very start of the next line, and press **Ctrl+V**.
+   - Template is here: **doc/templates/bootcamp_sql/gold_schema.yml**
+   - In vim: type **:r** then paste the template's path, then **Enter**
+   - In VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Go back
+     to **resources.yml**, click the very start of the next line, and
+     press **Ctrl+V**.
    - Then, in the lines you added, replace **YOUR_DATASET**.
 7. In **resources.yml**, add the library template below the pipeline's
    last library.
-   - vim: type **:r doc/templates/bootcamp_sql/pipeline_library.yml**
-   - VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Click
-     the very start of the next line, and press **Ctrl+V**.
+   - Template is here: **doc/templates/bootcamp_sql/pipeline_library.yml**
+   - In vim: type **:r** then paste the template's path, then **Enter**
+   - In VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Go back
+     to **resources.yml**, click the very start of the next line, and
+     press **Ctrl+V**.
    - Then, in the lines you added, replace **YOUR_TABLE**.
 8. Check the plan. The pipeline shows change. The first time, the gold
    schema shows create.
@@ -89,9 +92,9 @@ DESCRIBE YOUR_CATALOG.silver.YOUR_VIEW
 cp doc/templates/bootcamp_sql/gold.YOUR_TABLE.sql datasets/YOUR_DATASET/tables/gold.YOUR_TABLE.sql
 edit datasets/YOUR_DATASET/tables/gold.YOUR_TABLE.sql
 edit datasets/YOUR_DATASET/resources.yml
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle run YOUR_DATASET_pipeline -t YOUR_TARGET
 SELECT * FROM YOUR_CATALOG.gold.YOUR_TABLE
 git add datasets/YOUR_DATASET
@@ -133,9 +136,9 @@ edit datasets/treasury/resources.yml
 cp doc/templates/bootcamp_sql/gold.YOUR_TABLE.sql datasets/treasury/tables/gold.yieldCurve_inversions.sql
 edit datasets/treasury/tables/gold.yieldCurve_inversions.sql
 edit datasets/treasury/resources.yml
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle run treasury_pipeline -t YOUR_TARGET
 databricks bundle run treasury_pipeline -t YOUR_TARGET --refresh gold.yieldCurve_spread,gold.yieldCurve_inversions
 ```

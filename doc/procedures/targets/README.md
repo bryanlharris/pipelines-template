@@ -1,33 +1,44 @@
 # Targets
 
-A target is a place to deploy. Targets live in git-ignored files in
-**targets/**, copied from one of two templates in **doc/templates/target/**:
+## Overview
 
-- **targets.free.local.yml**: the free target, Free Edition at home.
+A target is a place to deploy: dev, staging or prod. Each target
+usually maps to one workspace.
+
+Configure via the **targets/** folder (git ignores \*.local.\*). The
+templates are in **doc/templates/target/**. Copy and customize the one(s)
+you want.
+
 - **targets.team.local.yml**: dev, staging and prod, for a team at work.
 
-Copy the ones you use, and uncomment the targets in them.
+## Development and Targets
+
+Here is a basic idea of the workflow. Everyone can deploy to the dev target
+side by side (notice the catalogs don't conflict). An elevated user makes
+tags and deploys to the staging and prod targets. Again, notice the catalog
+names.
 
 ```
-pipelines-framework
-└── team-pipelines                    (bundle name: team)
-    ├── jim/add-fred      →  dev      dev_jim_treasury
-    ├── sue/fix-rules     →  dev      dev_sue_treasury
-    ├── bob/new-table     →  dev      dev_bob_treasury
-    └── master
-        └── staging_v0.01 →  staging  staging_treasury
-            └── prod_v0.1 →  prod     treasury
+(bundle name: team)
+repo     branch/tag          target   catalog
+team-pipelines
+├─────── jim/add-fred     →  dev      dev_jim_treasury  (branch)
+├─────── sue/fix-rules    →  dev      dev_sue_treasury  (branch)
+├─────── bob/new-table    →  dev      dev_bob_treasury  (branch)
+└─────── master                                         (branch)
+         └─ staging_v0.01 →  staging  staging_treasury  (tag)
+            └─ prod_v0.1  →  prod     treasury          (tag)
 ```
 
-| Target  | Prefix            | Deploys from  | Who              | Procedure                            |
-|---------|-------------------|---------------|------------------|--------------------------------------|
-| free    | none              | any branch    | you, at home     | [free.md](free.md)                   |
-| dev     | `dev_jim_`        | a branch      | each person      | [dev_team.md](dev_team.md)           |
-| staging | `staging_`        | a tag         | the team lead    | [staging_team.md](staging_team.md)   |
-| prod    | none              | a tag         | the lead, as sp  | [prod_team.md](prod_team.md)         |
+### Target Details
 
-Free uses default storage and the upload scripts. Dev, staging and prod keep
-each catalog in **s3://bucket/catalogs/**.
+Dev, staging and prod keep each catalog in **s3://some-bucket/catalogs/**.
+Prod gets files from the fetch job. Dev gets fake files. Staging's pipelines
+read prod's **raw.files** volume, and staging's **raw.files** volume stays
+empty.
 
-Dev and prod get files from the fetch job. Staging's pipelines read prod's
-raw.files, and staging's own stay empty.
+| Target  | Prefix            | Who              | Table data     | Procedure                            |
+|---------|-------------------|------------------|----------------|--------------------------------------|
+| dev     | `dev_jim_`        | each person      | Fake           | [dev_team.md](dev_team.md)           |
+| staging | `staging_`        | the team lead    | Private/Public | [staging_team.md](staging_team.md)   |
+| prod    | none              | the lead, as sp  | Private/Public | [prod_team.md](prod_team.md)         |

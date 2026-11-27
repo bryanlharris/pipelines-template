@@ -40,10 +40,10 @@ edit targets/targets.team.local.yml
 git tag YOUR_TAG YOUR_STAGING_TAG
 git push origin YOUR_TAG
 git switch --detach YOUR_TAG
-py tools/bundle_plan.py prod
+py tools/bundle_plan.py -t prod
 databricks bundle deploy -t prod
-py tools/bundle_plan.py prod
-./tools/govern_catalogs.ps1 -Target prod -StagingWorkspace YOUR_WORKSPACE_ID
+py tools/bundle_plan.py -t prod
+./tools/govern_catalogs.ps1 -t prod -StagingWorkspace YOUR_WORKSPACE_ID
 git switch master
 ```
 
@@ -75,14 +75,14 @@ git tag YOUR_STAGING_TAG
 git tag YOUR_TAG YOUR_STAGING_TAG
 git push origin YOUR_STAGING_TAG YOUR_TAG
 git switch --detach YOUR_TAG
-py tools/bundle_plan.py staging
+py tools/bundle_plan.py -t staging
 databricks bundle deploy -t staging
-py tools/bundle_plan.py staging
-./tools/govern_catalogs.ps1 -Target staging
-py tools/bundle_plan.py prod
+py tools/bundle_plan.py -t staging
+./tools/govern_catalogs.ps1 -t staging
+py tools/bundle_plan.py -t prod
 databricks bundle deploy -t prod
-py tools/bundle_plan.py prod
-./tools/govern_catalogs.ps1 -Target prod -StagingWorkspace YOUR_WORKSPACE_ID
+py tools/bundle_plan.py -t prod
+./tools/govern_catalogs.ps1 -t prod -StagingWorkspace YOUR_WORKSPACE_ID
 databricks bundle run YOUR_DATASET_apply_settings -t prod
 databricks bundle run YOUR_DATASET_fetch -t prod
 git switch master

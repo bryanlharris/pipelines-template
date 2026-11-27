@@ -8,9 +8,11 @@ The pipeline loads files into bronze and silver.
 2. Read the ingest tasks template into the ingest job, after the router
    task. Go to the router's last line, **YOUR_TABLE**, and add the
    template's lines below it.
-   - vim: type **:r doc/templates/bootcamp/pipeline/ingest_tasks.yml**
-   - VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Click
-     the very start of the next line, and press **Ctrl+V**.
+   - Template is here: **doc/templates/bootcamp/pipeline/ingest_tasks.yml**
+   - In vim: type **:r** then paste the template's path, then **Enter**
+   - In VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Go back
+     to **resources.yml**, click the very start of the next line, and
+     press **Ctrl+V**.
    - Then replace **YOUR_DATASET** in **resources.yml**.
 3. Check the plan. One pipeline shows create, and the ingest job change.
 4. Deploy.
@@ -24,9 +26,9 @@ The pipeline loads files into bronze and silver.
 ```
 cat doc/templates/bootcamp/pipeline/resources.yml >> datasets/YOUR_DATASET/resources.yml
 edit datasets/YOUR_DATASET/resources.yml
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 ./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1
 Genie → How many records in YOUR_DATASET.bronze.YOUR_TABLE?
 ```

@@ -25,6 +25,6 @@ gold tables in plain English. Each example ships one in its **genie.yml**.
 cp examples/YOUR_DATASET/genie.yml datasets/YOUR_DATASET/
 edit datasets/YOUR_DATASET/genie.yml
 edit targets/YOUR_TARGET_FILE
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
 ```

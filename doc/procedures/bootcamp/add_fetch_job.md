@@ -11,9 +11,11 @@ Fetches files on a schedule. It downloads each file in **fetch.yml** into
 4. Read the fetch job template into **resources.yml**, after the apply
    settings job. Go to that job's last line,
    **${var.sdp_meta_dependency}**, and add the template's lines below it.
-   - vim: type **:r doc/templates/bootcamp/fetch/resources.yml**
-   - VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Click
-     the very start of the next line, and press **Ctrl+V**.
+   - Template is here: **doc/templates/bootcamp/fetch/resources.yml**
+   - In vim: type **:r** then paste the template's path, then **Enter**
+   - In VS Code: open the template, press **Ctrl+A** and **Ctrl+C**. Go back
+     to **resources.yml**, click the very start of the next line, and
+     press **Ctrl+V**.
    - Then replace **YOUR_DATASET** in **resources.yml**.
 5. Check the plan. One job shows create.
 6. Deploy.
@@ -27,9 +29,9 @@ Fetches files on a schedule. It downloads each file in **fetch.yml** into
 cp doc/templates/bootcamp/fetch/fetch.yml datasets/YOUR_DATASET/
 edit datasets/YOUR_DATASET/fetch.yml
 edit datasets/YOUR_DATASET/resources.yml
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle run YOUR_DATASET_fetch -t YOUR_TARGET
 ```
 

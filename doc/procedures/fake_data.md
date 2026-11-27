@@ -1,6 +1,6 @@
 # Fake Data
 
-Dev gets only made-up files, never real data. Free and prod get real data.
+Dev gets only made-up files, never real data. Prod gets real data.
 
 Each dataset keeps about 10 fake records per table in **fake/**. They have
 the real files' shape, with values that look fake on sight: dates from

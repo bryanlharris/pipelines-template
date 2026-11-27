@@ -4,6 +4,9 @@ Deploys your branch to your own copy in dev. Everyone on the team has a
 copy, kept apart by the first name in their prefix, e.g.
 **dev_jim_treasury**. Nobody else's copy changes.
 
+You **don't** need forks, but they're allowed. Everyone can share the repo
+and make personal branches.
+
 ## Prerequisites
 
 1. [setup.md](../setup.md): set up the computer and the CLI, with the
@@ -38,10 +41,10 @@ git clone YOUR_TEAM_REPO_URL
 cp doc/templates/target/targets.team.local.yml targets/
 edit targets/targets.team.local.yml
 git switch -c YOUR_BRANCH
-py tools/bundle_plan.py dev
+py tools/bundle_plan.py -t dev
 databricks bundle deploy -t dev
-py tools/bundle_plan.py dev
-./tools/govern_catalogs.ps1 -Target dev
+py tools/bundle_plan.py -t dev
+./tools/govern_catalogs.ps1 -t dev
 databricks bundle run YOUR_DATASET_apply_settings -t dev
 ./datasets/YOUR_DATASET/upload_YOUR_DATASET.ps1 -Fake -Catalog YOUR_CATALOG -DatabricksProfile dev
 ./datasets/documents/upload_documents.ps1 -Catalog YOUR_CATALOG -DatabricksProfile dev

@@ -11,9 +11,9 @@
 ```
 cat doc/templates/bootcamp/schemas_and_volumes/resources.yml >> datasets/YOUR_DATASET/resources.yml
 edit datasets/YOUR_DATASET/resources.yml
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 databricks bundle deploy -t YOUR_TARGET
-py tools/bundle_plan.py YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET
 ```
 
 ---

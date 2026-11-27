@@ -53,10 +53,10 @@ git tag -l "staging_*"
 git tag YOUR_TAG
 git push origin YOUR_TAG
 git switch --detach YOUR_TAG
-py tools/bundle_plan.py staging
+py tools/bundle_plan.py -t staging
 databricks bundle deploy -t staging
-py tools/bundle_plan.py staging
-./tools/govern_catalogs.ps1 -Target staging
+py tools/bundle_plan.py -t staging
+./tools/govern_catalogs.ps1 -t staging
 databricks bundle run YOUR_DATASET_apply_settings -t staging
 databricks bundle run YOUR_DATASET_pipeline -t staging
 SELECT count(*) FROM YOUR_CATALOG.silver.YOUR_TABLE

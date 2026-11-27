@@ -3,8 +3,9 @@
 How to set up, build and release with this repo. Start with
 [procedures/](procedures/README.md).
 
-- [procedures/](procedures/README.md): step-by-step instructions, one file per task
-- [templates/](templates/README.md): files to copy, which the procedures fill in
+- [procedures/](procedures/README.md): step-by-step instructions.
+- [templates/](templates/README.md): pre-made config files (fill in the blanks).
+- [free/](free/README.md): practice at home on Free Edition. Not for work.
 - [glossary.md](glossary.md): list of terms with their definitions
 - [/tools/](../tools/README.md): scripts, e.g. bundle_plan.py, which shows what a deploy would do
 - [/AGENTS.md](../AGENTS.md): instructions for AI assistants, e.g. Genie. Ask one to add a dataset or a table
@@ -18,11 +19,12 @@ doc/
     bootcamp/                  parts of bootcamp.md: learn one piece at a time
     build_many_table_dataset/  parts of build_many_table_dataset.md: dataset, table
     targets/                   one procedure per target; dev/ holds the parts of dev.md
+  free/                        practice at home on Free Edition: setup, dataset, table, catalog
   templates/
     dataset/                   a whole dataset, ready to copy
     bootcamp/                  one folder per bootcamp part
     bootcamp_sql/              gold table, gold schema and library, for bootcamp_sql.md
-    target/                    the targets templates: free and team
+    target/                    the targets templates
     pc/, mac/                  shell profile, editor and terminal settings
     genie/                     the Genie Code skill
 ```

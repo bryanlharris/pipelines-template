@@ -2,9 +2,25 @@
 
 Scripts you run from the repo's root folder.
 
-- [bundle_plan.py](bundle_plan.py): shows what a deploy would do.
-  `py tools/bundle_plan.py dev`
-- [govern_catalogs.ps1](govern_catalogs.ps1): binds each catalog to the workspace, isolates it, turns on data classification, and turns on data quality monitoring for silver and gold. Skips what's already done.
-  `./tools/govern_catalogs.ps1 -Target dev`
-  On prod, one more flag lets staging read each catalog's raw.files.
-  `./tools/govern_catalogs.ps1 -Target prod -StagingWorkspace YOUR_WORKSPACE_ID`
+- [bundle_plan.py](bundle_plan.py) and [bundle_plan.ps1](bundle_plan.ps1): show what a deploy would do. The same output, in Python or PowerShell.
+- [govern_catalogs.ps1](govern_catalogs.ps1): binds each catalog to the workspace, isolates it, turns on data classification, and turns on data quality monitoring for silver and gold. Skips what's already done. Prints one line per catalog: what changed or failed, or "ok".
+
+## Usage
+
+Run each from the repo's root folder. **YOUR_TARGET** is dev, staging or prod.
+
+```
+py tools/bundle_plan.py -t YOUR_TARGET
+py tools/bundle_plan.py -t YOUR_TARGET -v
+./tools/bundle_plan.ps1 -t YOUR_TARGET
+./tools/bundle_plan.ps1 -t YOUR_TARGET -v
+./tools/govern_catalogs.ps1 -t YOUR_TARGET
+./tools/govern_catalogs.ps1 -t YOUR_TARGET -v
+./tools/govern_catalogs.ps1 -t YOUR_TARGET -Schemas bronze,silver,gold
+./tools/govern_catalogs.ps1 -t prod -StagingWorkspace YOUR_WORKSPACE_ID
+```
+
+- The tools use the bundle in your current folder. Check where you are.
+- **-v** adds the bundle keys to the plan. For govern_catalogs, it prints every step.
+- **-Schemas** picks the schemas to monitor, instead of silver and gold. A schema that doesn't exist is reported.
+- **-StagingWorkspace** is for prod only. It lets staging read each catalog's raw.files.
